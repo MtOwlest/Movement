@@ -1,3 +1,5 @@
+// im a dumbass dont expect much, but this is made by me :)
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,15 +7,24 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float rnsped;
+
     [SerializeField] float maxsped;
-    [SerializeField] float placeHolder;
+
     Rigidbody2D rb;
+
     [SerializeField] public Vector2 MoveH;
+
     public Vector2 jumpForce;
+
     [SerializeField] private Vector2 playerScale;
+
     public float slippy;
+
     public bool isSliding;
+
     public Vector2 scale;
+
+    public bool isJump;
     
 
 
@@ -28,10 +39,13 @@ public class PlayerMovement : MonoBehaviour
     {
         MoveH = new Vector2(Input.GetAxis("Horizontal"), 0f);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(jumpForce);
-        }
+        //Jumping coming soon!
+
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+            //isJump = true;
+            //rb.AddForce(jumpForce);
+        //}
 
     }
     public void FixedUpdate()
@@ -46,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
     {
 
         //movement
-        rnsped = Mathf.MoveTowards(rnsped, moveDirection.x * maxsped, placeHolder);
 
         rb.velocity = new Vector2(rnsped * moveDirection.x, rb.velocity.y);
 
@@ -54,35 +67,44 @@ public class PlayerMovement : MonoBehaviour
         
 
         //sliding by pressing control, should output "Slipping"
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (isJump = true && Input.GetKey(KeyCode.LeftControl))
         {
             rnsped = slippy + rnsped;
-            rb.velocity = new Vector2(moveDirection.x * rnsped, rb.velocity.y);
-            Debug.Log("Slipping");
+
+            rb.velocity = new Vector2(rnsped * moveDirection.x, rb.velocity.y);
+
             isSliding = true;
+
             scale = new Vector2(0, 0.5f);
+
             playerScale = scale;
         }
 
+        else
+        {
+            playerScale = scale * 2;
+            isSliding = false;
+            rnsped = 5;
+        }
+
+
+
+
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            Debug.Log("Slipping");
+            Debug.Log("Start Slipping");
         }
 
         if (Input.GetKeyUp(KeyCode.LeftControl))
         {
-            Debug.Log("Slipping");
+            Debug.Log("Stopped Slipping");
+
         }
 
-
-        else
+        if (rb.velocity.magnitude > maxsped)
         {
-            rnsped = 5;
-            isSliding = false;
-            playerScale = scale * 2;
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxsped);
         }
-
-        
 
     }
 }
