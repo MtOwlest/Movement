@@ -1,3 +1,5 @@
+// i did not make this im fucking stupid.
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
