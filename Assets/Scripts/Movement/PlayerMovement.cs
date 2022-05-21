@@ -72,7 +72,9 @@ public class PlayerMovement : MonoBehaviour
             //where we use our rigidbody and add some force to that which is = to jumpforce variable
             rb.AddForce(jumpForce);
         }
+
         
+
     }
     public void FixedUpdate()
     {
@@ -101,8 +103,8 @@ public class PlayerMovement : MonoBehaviour
             {//current speed is equal to our slip speed + current speed
                 rnsped = slippy + rnsped;
 
-                //doing new velocity with our new speed
-                rb.velocity = new Vector2(rnsped * moveDirection.x, rb.velocity.y);
+                //adding force with our new speed
+                rb.AddForce(new Vector2(rnsped * moveDirection.x, rb.velocity.y));
 
                 //makes the bool isSliding = to true
                 isSliding = true;
