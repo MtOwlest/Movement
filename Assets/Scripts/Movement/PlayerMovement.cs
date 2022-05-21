@@ -2,6 +2,7 @@
 //this is made completely by me and i tried making it super easy to edit and learn from.
 //good stats would be 10 maxspeed, 300-500 jumpForce, and slippy = 0.2f
 
+
 //just the libraries were using
 using System.Collections;
 using System.Collections.Generic;
@@ -67,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
         if (isJump == true && Input.GetKeyDown(KeyCode.Space))
         {
             isSliding = false;
+            isJump = false;
             //where we use our rigidbody and add some force to that which is = to jumpforce variable
             rb.AddForce(jumpForce);
         }
@@ -91,10 +93,10 @@ public class PlayerMovement : MonoBehaviour
         
 
         //sliding by pressing control, should output "Slipping"
-        if (isSliding = false && Input.GetKey(KeyCode.LeftControl))
+        if (isJump == true && Input.GetKey(KeyCode.LeftControl))
         {
             //also if sliding is true then u can slide, so no sliding in air!
-            if (isJump == true)
+            if (isSliding == true)
 
             {//current speed is equal to our slip speed + current speed
                 rnsped = slippy + rnsped;
@@ -139,6 +141,9 @@ public class PlayerMovement : MonoBehaviour
         if (rnsped > maxsped)
         {
             rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxsped);
+            //makes rnsped = to maxsped
+            rnsped = maxsped;
+            //logging it
             Debug.Log(rb.velocity);
         }
 
@@ -152,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.layer == 12)
         {
             isJump = true;
-            isSliding = false;
+            isSliding = true;
             //Debug.Log(isJump);
         }
 
